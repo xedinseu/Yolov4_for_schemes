@@ -10,22 +10,14 @@ lbl = Label(window, text="Подождите, идет подготовка не
 lbl.grid(column=0, row=0)
 
 import os
-import shutil
-# файл с именами классов
-shutil.copy2("obj.names", "darknet/data/obj.names")
-# файл с путями к информации о обучающей и тестовой выборке, именам классов и путем сохранения весов моделей
-shutil.copy2("obj.data", "darknet/data/obj.data")
-shutil.copy2("yolov4-obj.cfg", "darknet/cfg/yolov4-obj.cfg")
-
-os.system('make')
 
 os.system('''
-%cd cfg
-!sed -i 's/batch=64/batch=1/' yolov4-obj.cfg
-!sed -i 's/subdivisions=32/subdivisions=1/' yolov4-obj.cfg
-!sed -i 's/width=640/width=1280/' yolov4-obj.cfg
-!sed -i 's/#height=640/#height=1280/' yolov4-obj.cfg
-%cd ..
+cd cfg
+sed -i 's/batch=64/batch=1/' yolov4-obj.cfg
+sed -i 's/subdivisions=32/subdivisions=1/' yolov4-obj.cfg
+sed -i 's/width=640/width=1280/' yolov4-obj.cfg
+sed -i 's/#height=640/#height=1280/' yolov4-obj.cfg
+cd ..
 ''')
 
 
@@ -74,7 +66,7 @@ classes
 def remove_values_from_list(the_list, val):
    return [value for value in the_list if value != val]
 
-f = open('darknet/result.txt', 'r')
+f = open('result.txt', 'r')
 k=0
 # служебная информация прокрутиться при открытом файле trash
 f1 = open('trash.txt', 'w')
@@ -82,7 +74,7 @@ for line in f:
   # как только находим название файла, открываем соответствующий ему текстовый файл на запись, закрыв предыдущий
   if line.find('/content/')!= -1:
     f1.close()
-    f1 = open('data/scheme_{}.txt'.format(k), 'w')
+    f1 = open('scheme_{}.txt'.format(k), 'w')
     k+=1
   # начинаем построчно парсить результаты, записывая их построчно в файл для очередной схемы
   one_obj_list = ''
@@ -127,7 +119,7 @@ def check_intersection(input1, input2):
   return (float(iou))
 
 # извлекаем из текстового документа данные в массив
-f = open('data/scheme_0.txt', 'r')
+f = open('scheme_0.txt', 'r')
 big_list = []
 iou_list = []
 for line in f:
