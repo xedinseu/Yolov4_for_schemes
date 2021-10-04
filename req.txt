@@ -1,0 +1,6 @@
+tk
+opencv-python
+matplotlib
+torchvision
+torch
+pandas
