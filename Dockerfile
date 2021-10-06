@@ -13,6 +13,15 @@ RUN cd /root && git clone https://github.com/AlexeyAB/darknet.git && cd darknet 
 COPY req.txt /req.txt
 RUN python3.8 -m pip install --no-cache-dir -r /req.txt
 
+# Add user
+RUN adduser --quiet --disabled-password qtuser && usermod -a -G audio qtuser
+
+# This fix: libGL error: No matching fbConfigs or visuals found
+ENV LIBGL_ALWAYS_INDIRECT=1
+
+# Install Python 3, PyQt5
+RUN apt-get update && apt-get install -y python3-pyqt5
+
 COPY files/obj.names /root/darknet/data/obj.names 
 COPY files/obj.data /root/darknet/data/obj.data
 COPY files/yolov4-obj.cfg /root/darknet/cfg/yolov4-obj.cfg
@@ -23,13 +32,5 @@ COPY files/schemes_detector.py /root/schemes_detector.py
 
 WORKDIR /root/darknet
 
-# Add user
-RUN adduser --quiet --disabled-password qtuser && usermod -a -G audio qtuser
-
-# This fix: libGL error: No matching fbConfigs or visuals found
-ENV LIBGL_ALWAYS_INDIRECT=1
-
-# Install Python 3, PyQt5
-RUN apt-get update && apt-get install -y python3-pyqt5
 
 CMD ["python3", "/root/schemes_detector.py"]
