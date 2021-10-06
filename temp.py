@@ -68,7 +68,7 @@ f.close()
 
 os.system('./darknet detector test data/obj.data cfg/yolov4-obj.cfg yolov4-obj_last.weights -dont_show -ext_output -thresh 0.1 < /content/images.txt > result.txt')
 
-#imShow('predictions.jpg')
+imShow('predictions.jpg')
 
 f = open('classes.txt', 'r')
 classes = {}
@@ -185,7 +185,7 @@ for i in range(len(fin_links)):
 fin_links = list(filter(lambda a: a != [-1,-1], fin_links))
 import pandas as pd 
 
-file = '/root/darcnet/your_OC_dir/'
+file = '/root/OC dir/'
 
 pd.DataFrame(fin_links).to_csv(file + "fin_links.csv")
 

@@ -3,7 +3,9 @@ services:
   app:
     build:
       context: .
-    ports:
-      - 8080:80
+    environment:
+      #- DISPLAY=${DISPLAY} linux
+      - DISPLAY=host.docker.internal:0 # windovs, need https://sourceforge.net/projects/vcxsrv/ to work
     volumes:
-      - . :/OC dir
+      - . :/root/darcnet/your_OC_dir
+      - /tmp/.X11-unix:/tmp/.X11-unix
