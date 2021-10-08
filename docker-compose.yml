@@ -3,6 +3,7 @@ services:
   app:
     build:
       context: .
+    privileged: true
     environment:
       #- DISPLAY=${DISPLAY} linux
       - DISPLAY=host.docker.internal:0 # windovs, need https://sourceforge.net/projects/vcxsrv/ to work
